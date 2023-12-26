@@ -18,14 +18,14 @@ endif()
 # Options
 ###############################################################################
 
-option(CLIPPER_BUILD_BINDINGS_PYTHON "Build Python bindings" ON)
+option(CLIPPER_BUILD_BINDINGS_PYTHON "Build Python bindings" OFF)
 option(CLIPPER_BUILD_BINDINGS_MATLAB "Build MATLAB bindings" OFF)
 option(CLIPPER_BUILD_TESTS "Build testsuite" OFF)
 option(CLIPPER_BUILD_BENCHMARKS "Build benchmarks" OFF)
-option(CLIPPER_ENABLE_MKL "Use MKL with Eigen" OFF)
+option(CLIPPER_ENABLE_MKL "Use MKL with Eigen" ON)
 option(CLIPPER_ENABLE_BLAS "Use BLAS with Eigen" OFF) # apt install libopenblas-dev
-option(CLIPPER_ENABLE_MAXCLIQUE "Use PMC lib for solveAsMaximumClique" ON)
-option(CLIPPER_ENABLE_SCS_SDR "Use SCS lib for solveAsMSRCSDR" ON)
+option(CLIPPER_ENABLE_MAXCLIQUE "Use PMC lib for solveAsMaximumClique" OFF)
+option(CLIPPER_ENABLE_SCS_SDR "Use SCS lib for solveAsMSRCSDR" OFF)
 
 if(CLIPPER_ENABLE_MKL AND CLIPPER_ENABLE_BLAS)
   message(FATAL_ERROR "Cannot enable both MKL and BLAS (prefer MKL)")
@@ -104,7 +104,7 @@ target_link_libraries(clipper PRIVATE OpenMP::OpenMP_CXX)
 target_include_directories(clipper PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
-target_compile_options(clipper PUBLIC -march=native -mavx -mfma)
+# target_compile_options(clipper PUBLIC -march=native -mavx -mfma)
 set_target_properties(clipper PROPERTIES
   VERSION ${PROJECT_VERSION})
 target_compile_definitions(clipper PUBLIC CLIPPER_VERSION="${PROJECT_VERSION}")
